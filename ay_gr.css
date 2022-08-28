@@ -62,12 +62,10 @@ body {
 	grid-area:  navbar;
 	border: 1px solid #4B7F52;
 	background-color: #F2F2F2;
-	overflow: auto;
 	text-align: center;
-
 	padding: 0px;
   	display: grid;
-	grid-template-columns: repeat(5, 1fr);
+	grid-template-columns: repeat(6, 1fr);
   	grid-template-rows: 1fr;
 }
 
@@ -97,6 +95,8 @@ body {
 	text-align: center;
 	background-color: #F2F2F2;
 	border: 1px solid #4B7F52;
+    overflow:auto;
+    white-space: nowrap;
 }
 
 
@@ -123,8 +123,6 @@ body {
 /* Estilo para la tabla */
 #garbage_table{
 	grid-area:  garbage_table;
-    overflow:auto;
-    white-space: nowrap;
 }
 table {
     overflow-x:auto;
@@ -213,7 +211,7 @@ table .hidden_row {
 }
 
 
-@media screen and (max-width:  768px){
+@media screen and (max-width:  750px){
 	body{
 		grid-template-areas: 	'header'
 								'navbar'
@@ -225,4 +223,23 @@ table .hidden_row {
 
 		grid-template-columns: 1fr;
 	}
+
+	.navbar {
+    	grid-template-columns: 1fr 1fr 1fr;
+    	grid-template-rows: 1fr 1fr;
+  	}
+}
+
+@media screen and (max-width: 500px) {
+	.navbar {
+    	grid-template-columns: 1fr 1fr;
+    	grid-template-rows: 1fr 1fr 1fr;
+  	}
+}
+
+@media screen and (max-width: 250px) {
+	.navbar {
+    	grid-template-columns: 1fr;
+    	grid-template-rows: repeat(6fr);
+  	}
 }
