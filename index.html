@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" lang="es">
+		<title>Our data</title>
+
+		<!-- <link href="https://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet"> -->
+		<!-- <link rel="stylesheet" href="style.css"> -->
+		
+		<!-- Jquery
+			se usa para las animaciones de esconder o desplegar partes del la web 
+		-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    	<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script> -->
+    	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"> -->
+    	<!-- <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"> -->
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    	<!-- Chart
+    		se usa para representar las gráficas
+
+    		https://www.chartjs.org/docs/latest/
+    	-->
+    	<script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js"></script>
+
+
+    	<!-- StreamSaverJS
+			se usa para descargar los ficheros, tiene dependecia de web-streams-polyfill
+
+			https://github.com/jimmywarting/StreamSaver.js/tree/master
+		-->
+		<script src="https://cdn.jsdelivr.net/npm/web-streams-polyfill@2.0.2/dist/ponyfill.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/streamsaver@2.0.3/StreamSaver.min.js"></script>
+		<script>
+			//import streamSaver from 'StreamSaver';
+			//const streamSaver = require('streamsaver');
+			const streamSaver = window.streamSaver;
+		</script>
+
+		<!-- Leaflet 
+			se usa para mostrar el mapa e interacionar con él
+		-->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+		integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+		crossorigin=""/>
+		<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+
+		<link rel="stylesheet" href="ay_gr.css">
+		<script src="script_aygr.js"></script>
+	</head>
+
+	<body>
+
+		<header class="grid_element">
+
+		</header>
+
+		<div class="grid_element" id="date_filter">
+			<p>Indique el rango de fechas que quiere comprobar.</p><br>
+			<label for="start_date">Desde </label>
+			<input type="date" id="start_date" class="correct_date" name="start_date" value="2010-01-01" min="2010-01-01" onchange="check_start_date_input();">
+			<label for="end_date"> hasta </label>
+			<input type="date" id="end_date" class="correct_date" name="end_date" min="2010-01-01" onchange="check_end_date_input();"><br>
+			<p>Las fechas deben de estar entre el día 01/01/2010 y hoy, tenga en cuenta que la primera fecha no puede ser posterior a la segunda fecha.</p>
+
+   		</div>
+		
+   		<div class="grid_element" id="garbage_filter">
+			<p>Residuos a mostrar:</p>
+   		</div >
+		
+   		<div class="grid_element" id="district_filter">	
+   			<p>Áreas a mostrar:</p>
+   		</div>
+
+   		<div class="grid_element navbar" id="navbar"> 
+			<a class="active" id="navbar_garbage_table" for="garbage_table" onclick="activate_navbar(this.id)">Tabla</a>
+			<a class="inactive" id="navbar_map" for="map" onclick="activate_navbar(this.id)">Mapa</a>
+			<a class="inactive" id="navbar_garbage_graph" for="garbage_graph" onclick="activate_navbar(this.id)">Gráficas</a>
+			<a class="inactive" id="navbar_donwload_file" for="donwload_file" onclick="activate_navbar(this.id)">Descarga de datos</a>
+			<a class="inactive" id="navbar_api" for="api" onclick="activate_navbar(this.id)">API</a>
+   		</div>
+
+   		<div class="menu_option">
+			<div class="grid_element tables" id="garbage_table"></div>
+
+			<div class="grid_element map" id="map">	
+	   			<p>El mapa no ha cargando</p>
+	   		</div>
+
+			<canvas class="grid_element graphs" id="garbage_graph" aria-label="Grafica de barras que muestra los residuos por tiempo" role="graph"> 
+				<p>Su navegador no puede mostrar la gráfica.</p>
+			</canvas>
+
+			<div class="grid_element donwload_file" id="donwload_file">
+				<label for="df_format_select">Elija el formato:</label>
+				<br>
+			    <input type="radio" id="csv" name="df_format" value="csv">
+			    <label for="csv">CSV</label>
+				<br>
+			    <input type="radio" id="json" name="df_format" value="json">
+			    <label for="json">JSON</label>
+				<br>
+				<br>
+
+				<label for="df_date_select">Elija el formato de fecha:</label>
+				<br>
+				<input type="radio" id="year" name="df_date" value="year">
+			    <label for="year">Agregado por año</label>
+				<br>
+			    <input type="radio" id="month" name="df_date" value="month">
+			    <label for="month">Agregado por mes</label>
+				<br>
+			    <input type="radio" id="day" name="df_date" value="day">
+			    <label for="day">Agregado por día</label>
+				<br>
+
+				<br>
+				<button onclick="donwload_file()">Descargar fichero</button>
+			</div>
+
+			<div class="grid_element api" id="api">	
+	   			<p>Se ofrece una api para obtener la información representada en esta web.</p><br>
+	   			<p>La información completa está disponible en:</p><p id="whole_api">http://localhost/api.php</p>
+	   			<br>
+	   			<p>La información de la consulta actual: </p><p id="filtered_api"></p>
+	   		</div>
+		</div>
+
+	</body>
+</html>
