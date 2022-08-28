@@ -571,7 +571,7 @@ function printAllData(my_table, counter, daily_data, monthly_data, yearly_data, 
 	//Añadimos la cabecera
 	table_html+='<thead><tr class="header"><th>Fecha</th>';
 	for (cont of counter_list){
-		table_html+='<td onclick="hideCheckboxFilter(\''+counter+'_checkbox_'+cont[counter+'_id']+'\')">' + cont[counter] + '</td>';
+		table_html+='<td">' + cont[counter] + '</td>';
 	}
 	table_html+='<td>TOTAL</td></tr></thead>';
 
