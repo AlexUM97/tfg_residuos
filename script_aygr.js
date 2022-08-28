@@ -536,6 +536,7 @@ async function show_tables() {
 	addData(garbage_graph, labels_graph, datasets);
 	
 	//API dinámica
+	/* 
 	let filtered_api = document.getElementById('filtered_api');
 
 	let api_garbages = '';
@@ -559,6 +560,7 @@ async function show_tables() {
 	if (Date.parse(end_date) != Date.parse(document.getElementById("end_date").max)){
 		filtered_api.innerHTML += 'ed=' + end_date;
 	}
+	*/
 
 }
 
