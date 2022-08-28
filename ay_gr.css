@@ -101,30 +101,25 @@ body {
 
 
 #donwload_file{
-	grid-area:  donwload_file;
 	display: inline-block;
 	text-align: left;
 }
 
 #api{
-	grid-area:  donwload_file;
 	display: inline-block;
 	text-align: left;
 }
 
 #help{
-	grid-area:  donwload_file;
 	display: inline-block;
 	text-align: left;
 }
 
 #garbage_graph{
-	grid-area:  garbage_graph;
 	padding: 0;
 }
 
 #map{
-	grid-area:  map;
 	min-height:  400px;
 }
 
@@ -134,9 +129,6 @@ body {
 }
 
 /* Estilo para la tabla */
-#garbage_table{
-	grid-area:  garbage_table;
-}
 table {
     	overflow-x:auto;
   	display: inline-block;
