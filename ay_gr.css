@@ -8,8 +8,8 @@ Paleta de color utilizada para las tablas:
 }*/
 
 body {
-	margin: 0 auto;
-	width: 100%;
+	margin: 10px 10px 10px 10px;
+	width: 100%-20px;
 	font-family: "Myriad Pro", 
 	"Helvetica Neue", Helvetica, 
 	Arial, Sans-Serif;
