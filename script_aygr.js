@@ -555,14 +555,14 @@ async function show_tables() {
 
 	let filters = '';
 	if (Date.parse(start_date) != Date.parse(document.getElementById("start_date").min)){
-		filters = 'sd=' + start_date;
+		filters = 'start=' + start_date;
 	}
 
 	if (Date.parse(end_date) != Date.parse(document.getElementById("end_date").max)){
 		if (filters === ''){
-			filters = 'ed=' + end_date;
+			filters = 'end=' + end_date;
 		} else {
-			filters += '&ed=' + end_date;
+			filters += '&end=' + end_date;
 		}
 	}
 
@@ -574,9 +574,9 @@ async function show_tables() {
 	api_garbages = api_garbages.substring(1);
 	if (flag_filtered_garbages === true){
 		if (filters === ''){
-			filters = 'ga=' + api_garbages;
+			filters = 'garbage=' + api_garbages;
 		} else {
-			filters += '&ga=' + api_garbages;
+			filters += '&garbage=' + api_garbages;
 		}
 	}
 
@@ -588,9 +588,9 @@ async function show_tables() {
 	api_subdistrict = api_subdistrict.substring(1);
 	if (flag_filtered_subdistricts === true){
 		if (filters === ''){
-			filters = 'sd=' + api_subdistrict;
+			filters = 'subdistrict=' + api_subdistrict;
 		} else {
-			filters += '&sd=' + api_subdistrict;
+			filters += '&subdistrict=' + api_subdistrict;
 		}
 	}
 
