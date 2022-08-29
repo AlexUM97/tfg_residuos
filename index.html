@@ -61,8 +61,7 @@
 			<input type="date" id="start_date" class="correct_date" name="start_date" value="2010-01-01" min="2010-01-01" onchange="check_start_date_input();">
 			<label for="end_date"> hasta </label>
 			<input type="date" id="end_date" class="correct_date" name="end_date" min="2010-01-01" onchange="check_end_date_input();"><br>
-			<p>Las fechas deben de estar entre el día 01/01/2010 y hoy, tenga en cuenta que la primera fecha no puede ser posterior a la segunda fecha.</p>
-
+			<p id="dates_range"></p>
    		</div>
 		
    		<div class="grid_element" id="garbage_filter">
@@ -131,6 +130,7 @@
 					por ejemplo una consulta filtrando los datos entre 01/04/2016 y 15/04/2016 quedaría como:</p>
 				<br>
 				<p>http://localhost/api.php?sd=2016-04-01&ed=2016-04-15</p>
+				<p id='filtered_api'></p>
 	   		</div>
 
 	   		<div class="grid_element help" id="help">	
