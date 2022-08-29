@@ -82,21 +82,6 @@ function getRandomRgb() {
 }
 
 //
-function max_datefields(){
-	let today = new Date();
-	let dd = today.getDate();
-	let mm = today.getMonth() + 1; //January is 0
-	let yyyy = today.getFullYear();
-	dd = (dd < 10) ? '0' + dd : dd;
-	mm = (mm < 10) ? '0' + mm : mm;
-	today = yyyy + '-' + mm + '-' + dd;
-
-	document.getElementById("start_date").setAttribute("max", today);
-	document.getElementById("end_date").setAttribute("max", today);
-	document.getElementById("end_date").value = today;
-}
-
-//
 function groupBy(objectArray, grouped_by, counter){
 	let helper = {};
 	return objectArray.reduce(function(acc, obj) {
@@ -119,6 +104,28 @@ function groupBy(objectArray, grouped_by, counter){
 	  }
 	  return acc;
 	}, []);
+}
+
+//
+function minmax_datefields(){
+	const dates = received_data['Dates'];
+	const min_date = dates['min_date'];
+	const max_date = dates['max_date'];
+
+	document.getElementById("start_date").setAttribute("min", min_date);
+	document.getElementById("start_date").setAttribute("max", max_date);
+	document.getElementById("start_date").value = min_date;
+
+	document.getElementById("end_date").setAttribute("min", min_date);
+	document.getElementById("end_date").setAttribute("max", max_date);
+	document.getElementById("end_date").value = max_date;
+
+	const min_date_f = min_date.substring(8,10) + '/' + min_date.substring(5,7) + '/' + min_date.substring(0,4);
+	const max_date_f = max_date.substring(8,10) + '/' + max_date.substring(5,7) + '/' + max_date.substring(0,4);
+
+	document.getElementById("dates_range").innerHTML = "Las fechas deben de estar entre el día " + 
+					min_date_f + " y " + max_date_f +
+					", tenga en cuenta que la primera fecha no puede ser posterior a la segunda fecha.";
 }
 
 function check_start_date_input(){
@@ -254,7 +261,7 @@ async function populate() {
 	//Se utiliza var porque necesitamos que sea global, no podemos limitar a la función
 	received_data = await response.json();
 
-	max_datefields();
+	minmax_datefields();
 
 
 	//Declarar filtros residuos
@@ -536,7 +543,6 @@ async function show_tables() {
 	addData(garbage_graph, labels_graph, datasets);
 	
 	//API dinámica
-	/* 
 	let filtered_api = document.getElementById('filtered_api');
 
 	let api_garbages = '';
@@ -560,7 +566,6 @@ async function show_tables() {
 	if (Date.parse(end_date) != Date.parse(document.getElementById("end_date").max)){
 		filtered_api.innerHTML += 'ed=' + end_date;
 	}
-	*/
 
 }
 
