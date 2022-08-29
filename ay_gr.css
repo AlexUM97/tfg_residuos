@@ -97,26 +97,31 @@ body {
 }
 
 
-#donwload_file{
-	display: inline-block;
+.donwload_file{
+    display: inline-block;
 	text-align: left;
 }
 
-#api{
-	display: inline-block;
+.api{
+    display: inline-block;
+	text-align: left;
+}
+.api .api_consult{
+	border: 1px solid #4B7F52;
+	background-color: #e3fff0;
+	padding: 5px;
+}
+
+.help{
+    display: inline-block;
 	text-align: left;
 }
 
-#help{
-	display: inline-block;
-	text-align: left;
-}
-
-#garbage_graph{
+.garbage_graph{
 	padding: 0;
 }
 
-#map{
+.map{
 	min-height:  400px;
 }
 
