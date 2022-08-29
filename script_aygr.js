@@ -30,11 +30,11 @@ function showHideElement(element) {
 function changeTableIcon(element) {
 	let icon = document.getElementById(element);
 
-	if (icon.getAttribute('class') === 'fa fa-angle-down') {
-		icon.setAttribute('class','fa fa-angle-up');
+	if (icon.getAttribute('class') === 'fa fa-chevron-circle-down') {
+		icon.setAttribute('class','fa fa-chevron-circle-up');
 	}
-	else if (icon.getAttribute('class') === 'fa fa-angle-up') {
-		icon.setAttribute('class','fa fa-angle-down');
+	else if (icon.getAttribute('class') === 'fa fa-chevron-circle-up') {
+		icon.setAttribute('class','fa fa-chevron-circle-down');
 	}
 	else { //En caso de que sea algo raro lo elimino
 		icon.setAttribute('class','');
@@ -585,7 +585,7 @@ function printAllData(my_table, counter, daily_data, monthly_data, yearly_data, 
 		const total_y = datos_anual.map(elem => elem.picked_up).reduce((pv,cv)=>parseInt(pv)+parseInt(cv),0);
 		const total_year = total_y.toLocaleString('de-DE') + ' kg';
 
-		table_html+='<tr  class="data_per_year" onclick="changeTableIcon(\'hidden_row_icon_'+ counter + index_anual + '_meses\');showHideElement(\'hidden_row_'+ counter + index_anual +'_meses\')"><th><i class="fa fa-angle-down" aria-hidden="true" id="hidden_row_icon_'+ counter + index_anual + '_meses"> </i>' + index_anual + '</th>';
+		table_html+='<tr  class="data_per_year" onclick="changeTableIcon(\'hidden_row_icon_'+ counter + index_anual + '_meses\');showHideElement(\'hidden_row_'+ counter + index_anual +'_meses\')"><th><i class="fa fa-chevron-circle-down" aria-hidden="true" id="hidden_row_icon_'+ counter + index_anual + '_meses"> </i>' + index_anual + '</th>';
 		for (cont of counter_list){
 			const valor = datos_anual.filter(elem => elem[counter+'_id'] === cont[counter+'_id'])[0];
 
@@ -613,7 +613,7 @@ function printAllData(my_table, counter, daily_data, monthly_data, yearly_data, 
 			for(index_diario of lista_diaria){
 				table_html+='showHideElement(\'hidden_row_'+ counter + index_anual + index_mensual + index_diario +'\');';
 			} 
-			table_html+='"><th><i class="fa fa-angle-down" aria-hidden="true" id="hidden_row_icon_'+ counter + index_anual + index_mensual + '"> </i>';
+			table_html+='"><th><i class="fa fa-chevron-circle-down" aria-hidden="true" id="hidden_row_icon_'+ counter + index_anual + index_mensual + '"> </i>';
 			if (index_mensual == 1){
 					table_html+='Enero</th>';
 				}
