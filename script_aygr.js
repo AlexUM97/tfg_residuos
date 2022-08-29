@@ -415,21 +415,29 @@ async function show_tables() {
 
 	const garbages = received_data['Garbages'];
 	let present_garbages = Array();
+	let flag_filtered_garbages = false;
 	for(gar of garbages) {
 		const garbage_checkbox = document.getElementById("garbage_checkbox_"+gar.garbage_id);
 
 		if(garbage_checkbox.checked){
 			present_garbages.push(gar);
 		}
+		else {
+			flag_filtered_garbages = true;
+		}
 	}
 
 	const districts = received_data['Districts'];
-	let present_districts = Array();
+	let present_subdistricts = Array();
+	let flag_filtered_subdistricts = false;
 	for(dis of districts) {
 		const subdistrict_checkbox = document.getElementById("subdistrict_checkbox_"+dis.subdistrict_id);
 
 		if(subdistrict_checkbox.checked){
-			present_districts.push(dis);
+			present_subdistricts.push(dis);
+		}
+		else {
+			flag_filtered_subdistricts = true;
 		}
 	}
 
@@ -441,7 +449,7 @@ async function show_tables() {
 						Date.parse(elem.year+'-'+elem.month+'-'+elem.day) >= Date.parse(start_date) &&
 						Date.parse(elem.year+'-'+elem.month+'-'+elem.day) <= Date.parse(end_date) &&
 						present_garbages.map(g => g.garbage_id).indexOf(elem.garbage_id) > -1 &&
-						present_districts.map(g => g.subdistrict_id).indexOf(elem.subdistrict_id) > -1
+						present_subdistricts.map(g => g.subdistrict_id).indexOf(elem.subdistrict_id) > -1
 					);
 
 
@@ -458,7 +466,7 @@ async function show_tables() {
 			let table_html = "<table id='tabla' align=center cellpadding=10> <tr><th>Distrito</th><td>"+layer.feature.properties.DISTRITO+"</td></tr> <tr><th>AAVV</th><td>"+layer.feature.properties.AAVV+"</td></tr>";
 			div.setAttribute("class","map_popup"); 
 		
-			if (present_districts.map(g => g.subdistrict_id).indexOf(layer.feature.properties.AAVV_ID)===-1){
+			if (present_subdistricts.map(g => g.subdistrict_id).indexOf(layer.feature.properties.AAVV_ID)===-1){
 				//Si desactivado oscurecer
 				layer.setStyle({"fillOpacity": 0.75});
 			}
@@ -545,28 +553,48 @@ async function show_tables() {
 	//API dinámica
 	let filtered_api = document.getElementById('filtered_api');
 
-	let api_garbages = '';
-	let api_subdistrict = '';
-
-	for (gar of present_garbages){
-		api_garbages += ',' + gar.garbage_id;
-	}
-	api_garbages = api_garbages.substring(1);
-
-	// for (gar of present_subdistrict){
-	// 	api_subdistrict += ',' + gar.subdistrict_id;
-	// }
-	// api_subdistrict = api_subdistrict.substring(1);
-
-	filtered_api.innerHTML = 'http://localhost/api.php?';
+	let filters = '';
 	if (Date.parse(start_date) != Date.parse(document.getElementById("start_date").min)){
-		filtered_api.innerHTML += 'sd=' + start_date;
+		filters = 'sd=' + start_date;
 	}
 
 	if (Date.parse(end_date) != Date.parse(document.getElementById("end_date").max)){
-		filtered_api.innerHTML += 'ed=' + end_date;
+		if (filters === ''){
+			filters = 'ed=' + end_date;
+		} else {
+			filters += '&ed=' + end_date;
+		}
 	}
 
+	let api_garbages = '';
+	const list_garbages = getUniques(present_garbages.map(elem => elem.garbage_id)).sort((a,b)=>(a-b));
+	for (gar of list_garbages){
+		api_garbages += ',' + gar;
+	}
+	api_garbages = api_garbages.substring(1);
+	if (flag_filtered_garbages === true){
+		if (filters === ''){
+			filters = 'ga=' + api_garbages;
+		} else {
+			filters += '&ga=' + api_garbages;
+		}
+	}
+
+	let api_subdistrict = '';
+	const list_subdistricts = getUniques(present_subdistricts.map(elem => elem.subdistrict_id)).sort((a,b)=>(a-b));
+	for (sdi of list_subdistricts){
+		api_subdistrict += ',' + sdi;
+	}
+	api_subdistrict = api_subdistrict.substring(1);
+	if (flag_filtered_subdistricts === true){
+		if (filters === ''){
+			filters = 'sd=' + api_subdistrict;
+		} else {
+			filters += '&sd=' + api_subdistrict;
+		}
+	}
+
+	filtered_api.innerHTML = 'http://localhost/api.php?' + filters;
 }
 
 function printAllData(my_table, counter, daily_data, monthly_data, yearly_data, counter_list){
