@@ -97,7 +97,7 @@ body {
 }
 
 
-.donwload_file{
+#donwload_file{
     display: inline-block;
 	text-align: left;
 }
@@ -112,12 +112,12 @@ body {
 	padding: 5px;
 }
 
-.help{
+#help{
     display: inline-block;
 	text-align: left;
 }
 
-.garbage_graph{
+#garbage_graph{
 	padding: 0;
 }
 
