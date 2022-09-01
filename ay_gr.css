@@ -10,15 +10,17 @@ Paleta de color utilizada para las tablas:
 body {
 	margin: 10px 10px 10px 10px;
 	width: 100%-20px;
-	font-family: Helvetica, Arial, Sans-Serif;
+	font-family: Helvetica, 
+	Arial, Sans-Serif;
+
 	display: grid;
 	grid-gap: 10px;
 	grid-template-areas: 	'header header'
-				'navbar navbar'
-				'menu_option menu_option'
-				'date_filter district_filter'
-				'garbage_filter district_filter'
-				'footer footer';
+							'navbar navbar'
+							'menu_option menu_option'
+							'date_filter district_filter'
+							'garbage_filter district_filter'
+							'footer footer';
 	grid-template-columns: 1fr 1fr;
 }
 
@@ -26,7 +28,22 @@ body {
 	padding: 10px;
 }
 
-#date_filter{
+header{
+	grid-area: header;
+	padding: 10px;
+	background-color: #F2F2F2;
+	border: 1px solid #4B7F52;
+}
+
+footer{
+	grid-area: footer;
+	padding: 10px;
+	background-color: #F2F2F2;
+	border: 1px solid #4B7F52;
+}
+
+
+.date_filter{
 	grid-area: date_filter;
 	background-color: #F2F2F2;
 	border: 1px solid #4B7F52;
@@ -40,14 +57,14 @@ body {
 	color: red;
 }
 
-#garbage_filter{
+.garbage_filter{
 	grid-area:  garbage_filter;
 	text-align: left;
 	background-color: #F2F2F2;
 	border: 1px solid #4B7F52;
 }
 
-#district_filter{
+.district_filter{
 	grid-area:  district_filter;
 	text-align: left;
 	background-color: #F2F2F2;
@@ -78,7 +95,7 @@ body {
 
 .navbar a:hover {
 	background-color: #4B7F52;
-    	color: #ffffff;
+    color: #ffffff;
 }
 
 .active {
@@ -92,12 +109,11 @@ body {
 	text-align: center;
 	background-color: #F2F2F2;
 	border: 1px solid #4B7F52;
-    	overflow:auto;
-    	white-space: nowrap;
+    overflow:auto;
+    white-space: nowrap;
 }
 
-
-#donwload_file{
+.donwload_file{
     display: inline-block;
 	text-align: left;
 }
@@ -112,16 +128,16 @@ body {
 	padding: 5px;
 }
 
-#help{
+.help{
     display: inline-block;
 	text-align: left;
 }
 
-#garbage_graph{
+.garbage_graph{
 	padding: 0;
 }
 
-.map{
+#map{
 	min-height:  400px;
 }
 
@@ -132,121 +148,116 @@ body {
 
 /* Estilo para la tabla */
 table {
-    	overflow-x:auto;
-  	display: inline-block;
-    	font-size:  12px;
+    overflow-x:auto;
+    display: inline-block;
+    font-size:  12px;
 }
 
 table, th, td {
 	border-collapse: collapse;
-    	border: solid 1px white;
+    border: solid 1px white;
 }
 
 table .header{
-	color: #ffffff;
-	background-color: #4B7F52;
-	text-align: center;
+    color: #ffffff;
+    background-color: #4B7F52;
+    text-align: center;
 }
 table .header th{
-	width: 100px;
-	maxwidth: 100px;
-	minwidth: 100px;
-}
-table .header td{
-	width: 100px;
-	max-width: 100px;
-	min-width: 100px;
+    width: 100px;
+    maxwidth: 100px;
+    minwidth: 100px;
 }
 
 table .data_per_year{
-	color: #000000;
-	background-color: #7DD181;
+    color: #000000;
+    background-color: #7DD181;
 }
 table .data_per_year th{
-	text-align: center;
-	width: 100px;
-	max-width: 100px;
-	min-width: 100px;
+    text-align: center;
+    width: 100px;
+    max-width: 100px;
+    min-width: 100px;
 }
 table .data_per_year td{
-	text-align: right;
-	width: 100px;
-	max-width: 100px;
-	min-width: 100px;
+    text-align: right;
+    width: 100px;
+    max-width: 100px;
+    min-width: 100px;
 }
 
 table .data_per_month{
-	color: #000000;
-	background-color: #B6F9C9;
+    color: #000000;
+    background-color: #B6F9C9;
 }
 table .data_per_month th{
-	text-align: center;
-	width: 100px;
-	max-width: 100px;
-	min-width: 100px;
+    text-align: center;
+    width: 100px;
+    max-width: 100px;
+    min-width: 100px;
 }
 table .data_per_month td{
-	text-align: right;
-	width: 100px;
-	max-width: 100px;
-	min-width: 100px;
+    text-align: right;
+    width: 100px;
+    max-width: 100px;
+    min-width: 100px;
 }
 
 table .data_per_day{
-	color: #000000;
-	background-color: #E3FFF0;
+    color: #000000;
+    background-color: #E3FFF0;
 }
 table .data_per_day th{
-	text-align: right;
-	width: 100px;
-	max-width: 100px;
-	min-width: 100px;
+    text-align: right;
+    width: 100px;
+    max-width: 100px;
+    min-width: 100px;
 }
 table .data_per_day td{
-	text-align: right;
-	width: 100px;
-	max-width: 100px;
-	min-width: 100px;
+    text-align: right;
+    width: 100px;
+    max-width: 100px;
+    min-width: 100px;
 }
 
 table tbody tr:hover {
-	background-color: #F2F2F2;
+    background-color: #F2F2F2;
 }
 
 table .hidden_row {
-	display: none;
+    display: none;
 }
 
 
 @media screen and (max-width:  750px){
 	body{
 		grid-template-areas: 	'header'
-					'navbar'
-					'menu_option'
-					'date_filter'
-					'garbage_filter'
-					'district_filter'
-					'footer';
+								'navbar'
+								'menu_option'
+								'date_filter'
+								'garbage_filter'
+								'district_filter'
+								'footer';
 
 		grid-template-columns: 1fr;
 	}
 
 	.navbar {
-    		grid-template-columns: 1fr 1fr 1fr;
-    		grid-template-rows: 1fr 1fr;
+    	grid-template-columns: 1fr 1fr 1fr;
+    	grid-template-rows: 1fr 1fr;
   	}
 }
 
 @media screen and (max-width: 500px) {
 	.navbar {
-    		grid-template-columns: 1fr 1fr;
-    		grid-template-rows: 1fr 1fr 1fr;
+    	grid-template-columns: 1fr 1fr;
+    	grid-template-rows: 1fr 1fr 1fr;
   	}
 }
 
 @media screen and (max-width: 250px) {
 	.navbar {
-    		grid-template-columns: 1fr;
-    		grid-template-rows: repeat(6fr);
+    	grid-template-columns: 1fr;
+    	grid-template-rows: repeat(6fr);
   	}
 }
