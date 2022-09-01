@@ -42,6 +42,13 @@ footer{
 	border: 1px solid #4B7F52;
 }
 
+h1{
+	text-align: center;
+}
+
+h2{
+	text-align: center;
+}
 
 .date_filter{
 	grid-area: date_filter;
