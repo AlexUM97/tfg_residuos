@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 	<head>
-		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" lang="es">
+		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Our data</title>
 
 		<!-- <link href="https://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet"> -->
@@ -52,74 +52,77 @@
 	<body>
 
 		<header class="grid_element">
-
+			<h1>Recogida de residuos del Ayuntamiento de Granada</h1>
 		</header>
 
-		<div class="grid_element" id="date_filter">
-			<p>Indique el rango de fechas que quiere comprobar.</p><br>
-			<label for="start_date">Desde </label>
-			<input type="date" id="start_date" class="correct_date" name="start_date" value="2010-01-01" min="2010-01-01" onchange="check_start_date_input();">
-			<label for="end_date"> hasta </label>
-			<input type="date" id="end_date" class="correct_date" name="end_date" min="2010-01-01" onchange="check_end_date_input();"><br>
-			<p id="dates_range"></p>
-   		</div>
-		
-   		<div class="grid_element" id="garbage_filter">
-			<p>Residuos a mostrar:</p>
-   		</div >
-		
-   		<div class="grid_element" id="district_filter">	
-   			<p>Áreas a mostrar:</p>
-   		</div>
-
    		<div class="grid_element navbar" id="navbar"> 
-			<a class="active" id="navbar_garbage_table" for="garbage_table" onclick="activate_navbar(this.id)"><i class="fa fa-table" aria-hidden="true"></i> Tabla</a>
-			<a class="inactive" id="navbar_map" for="map" onclick="activate_navbar(this.id)"><i class="fa fa-map" aria-hidden="true"></i> Mapa</a>
-			<a class="inactive" id="navbar_garbage_graph" for="garbage_graph" onclick="activate_navbar(this.id)"><i class="fa fa-bar-chart" aria-hidden="true"></i> Gráficas</a>
-			<a class="inactive" id="navbar_donwload_file" for="donwload_file" onclick="activate_navbar(this.id)"><i class="fa fa-download" aria-hidden="true"></i> Descarga de datos</a>
-			<a class="inactive" id="navbar_api" for="api" onclick="activate_navbar(this.id)"><i class="fa fa-cloud" aria-hidden="true"></i> API</a>
-			<a class="inactive" id="navbar_help" for="help" onclick="activate_navbar(this.id)"><i class="fa fa-info-circle" aria-hidden="true"></i> Ayuda</a>
+			<a class="active" id="navbar_garbage_table" for="garbage_table_div" onclick="activate_navbar(this.id)"><i class="fa fa-table" aria-hidden="true"></i> Tabla</a>
+			<a class="inactive" id="navbar_map" for="map_div" onclick="activate_navbar(this.id)"><i class="fa fa-map" aria-hidden="true"></i> Mapa</a>
+			<a class="inactive" id="navbar_garbage_graph" for="garbage_graph_div" onclick="activate_navbar(this.id)"><i class="fa fa-bar-chart" aria-hidden="true"></i> Gráficas</a>
+			<a class="inactive" id="navbar_donwload_file" for="donwload_file_div" onclick="activate_navbar(this.id)"><i class="fa fa-download" aria-hidden="true"></i> Descarga de datos</a>
+			<a class="inactive" id="navbar_api" for="api_div" onclick="activate_navbar(this.id)"><i class="fa fa-cloud" aria-hidden="true"></i> API</a>
+			<a class="inactive" id="navbar_help" for="help_div" onclick="activate_navbar(this.id)"><i class="fa fa-info-circle" aria-hidden="true"></i> Ayuda</a>
    		</div>
 
    		<div class="menu_option">
-			<div class="grid_element tables" id="garbage_table"></div>
+			<div class="grid_element garbage_table" id="garbage_table_div">
+	   			<h2>Tabla de recogida de residuos</h2>
+				<div id="garbage_table"></div>
+			</div>
 
-			<div class="grid_element map" id="map">	
-	   			<p>El mapa no ha cargando</p>
+			<div class="grid_element map" id="map_div">
+	   			<h2>Mapa de recogida de residuos</h2>
+	   			<p>Si el mapa no se ve correctamente cambie el tamaño de la ventana.</p>
+				<div id="map">	
+	   				<p>El mapa no ha cargando</p>
+	   			</div>
 	   		</div>
 
-			<canvas class="grid_element graphs" id="garbage_graph" aria-label="Grafica de barras que muestra los residuos por tiempo" role="graph"> 
-				<p>Su navegador no puede mostrar la gráfica.</p>
-			</canvas>
+			<div class="grid_element garbage_graph" id="garbage_graph_div">
+				<h2>Gráfica de recogida de residuos</h2>
+				<canvas id="garbage_graph" aria-label="Grafica de barras que muestra los residuos por tiempo" role="graph"> 
+					<p>Su navegador no puede mostrar la gráfica.</p>
+				</canvas>
+			</div>
 
-			<div class="grid_element donwload_file" id="donwload_file">
-				<label for="df_format_select">Elija el formato:</label>
-				<br>
-			    <input type="radio" id="csv" name="df_format" value="csv">
-			    <label for="csv">CSV</label>
-				<br>
-			    <input type="radio" id="json" name="df_format" value="json">
-			    <label for="json">JSON</label>
-				<br>
-				<br>
-
-				<label for="df_date_select">Elija el formato de fecha:</label>
-				<br>
-				<input type="radio" id="year" name="df_date" value="year">
-			    <label for="year">Agregado por año</label>
-				<br>
-			    <input type="radio" id="month" name="df_date" value="month">
-			    <label for="month">Agregado por mes</label>
-				<br>
-			    <input type="radio" id="day" name="df_date" value="day">
-			    <label for="day">Agregado por día</label>
+			<div class="grid_element donwload_file" id="donwload_file_div">
+				<h2>Descarga de datos</h2>
+				<fieldset>
+					<legend>Elija el formato:</legend>
+					<div>
+					    <input type="radio" id="csv" name="df_format" value="csv" checked>
+					    <label for="csv">CSV</label>
+					</div>
+					<div>
+					    <input type="radio" id="json" name="df_format" value="json">
+					    <label for="json">JSON</label>
+					</div>
+				</fieldset>
 				<br>
 
+				<fieldset>
+					<legend>Elija el formato de fecha:</legend>
+					<div>
+						<input type="radio" id="year" name="df_date" value="year" checked>
+					    <label for="year">Agregado por año</label>
+					</div>
+					<div>
+					    <input type="radio" id="month" name="df_date" value="month">
+					    <label for="month">Agregado por mes</label>
+					</div>
+					<div>
+					    <input type="radio" id="day" name="df_date" value="day">
+					    <label for="day">Agregado por día</label>
+					</div>
+				</fieldset>
 				<br>
+
 				<button onclick="donwload_file()">Descargar fichero</button>
 			</div>
 
-			<div class="grid_element api" id="api">	
+			<div class="grid_element api" id="api_div">	
+				<h2>Interfaz de programación de aplicaciones</h2>
+
 	   			<p>La API no está desplegada en ningún servidor, se deja esta página como ayuda para una futura integración con su correspondiente despliegue.</p>
 				
 	   			<p>Se ofrece una api para obtener la información representada en esta web.</p><br>
@@ -129,17 +132,62 @@
 	   			<p>La información de la consulta actual se corresponde con la siguiente consulta de la API:</p>
 				<p class='api_consult' id='filtered_api'></p>
 				<br>
-
-				<p>Se puede filtrar por fecha en la API usando las variables "sd" y "ed" como fecha de inicio y fecha final respectivamente, 
-					por ejemplo una consulta filtrando los datos entre 01/04/2016 y 15/04/2016 quedaría como:</p>
+				
+				<p>Se puede filtrar por fecha en la API usando las variables "start" y "end"<br>como fecha de inicio y fecha final respectivamente.</p>
+				<p>Por ejemplo una consulta filtrando los datos entre 01/04/2016 y 15/04/2016 sería:</p>
 				<br>
-				<p class='api_consult' >http://localhost/api.php?sd=2016-04-01&ed=2016-04-15</p>
+				<p class='api_consult' >http://localhost/api.php?start=2016-04-01&end=2016-04-15</p>
+
+				<br>
+				
+				<p>Se puede filtrar por tipo de residuo en la API usando la variables "garbage".</p>
+				<p>Por ejemplo una consulta filtrando los datos de ID 1 y 2 sería:</p>
+				<br>
+				<p class='api_consult' >http://localhost/api.php?garbage=1,2</p>
+
+				<br>
+				
+				<p>Se puede filtrar por área en la API usando la variables "subdistrict".</p>
+				<p>Por ejemplo una consulta filtrando los datos de ID 4 y 5 sería:</p>
+				<br>
+				<p class='api_consult' >http://localhost/api.php?subdistrict=4,5</p>
+
+
+
 	   		</div>
 
-	   		<div class="grid_element help" id="help">	
+	   		<div class="grid_element help" id="help_div">	
+				<h2>Manual de uso</h2>
 	   			<p>Menú de ayuda, breve guía. WIP</p>
 	   		</div>
 		</div>
 
+
+
+		<div class="grid_element date_filter" id="date_filter_div">
+			<h2>Filtro de fechas</h2>
+			<p>Indique el rango de fechas que quiere comprobar.</p><br>
+			<label for="start_date">Desde </label>
+			<input type="date" id="start_date" class="correct_date" name="start_date" value="2010-01-01" min="2010-01-01" onchange="check_start_date_input();">
+			<label for="end_date"> hasta </label>
+			<input type="date" id="end_date" class="correct_date" name="end_date" min="2010-01-01" onchange="check_end_date_input();"><br>
+			<p id="dates_range"></p>
+   		</div>
+		
+   		<div class="grid_element garbage_filter" id="garbage_filter_div">
+   			<h2>Filtro de tipo de residuos</h2>
+			<p>Residuos a mostrar:</p>
+   		</div >
+		
+   		<div class="grid_element district_filter" id="district_filter_div">	
+   			<h2>Filtro de áreas</h2>
+   			<p>Áreas a mostrar:</p>
+   		</div>
+
+
+   		<footer>
+   			<p>Página web creada por Alejandro Uceda Moreno</p>
+   			<p>La información aquí presente ha sido creada proceduralmente y por tanto no refleja la realidad, solo es un conjunto de datos de prueba.</p>
+   		</footer>
 	</body>
 </html>
