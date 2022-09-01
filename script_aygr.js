@@ -266,7 +266,7 @@ async function populate() {
 
 	//Declarar filtros residuos
 	const garbages = received_data['Garbages'];
-	let garbage_filter = document.getElementById("garbage_filter");
+	let garbage_filter = document.getElementById("garbage_filter_div");
 
 	for(gar of garbages){
 		let div = document.createElement("DIV");
@@ -294,7 +294,7 @@ async function populate() {
 
 	//Declarar filtros distritios
 	const list_district_ids = getUniques(received_data['Districts'].map(elem => elem.district_id));
-	let district_filter = document.getElementById("district_filter");
+	let district_filter = document.getElementById("district_filter_div");
 
 	for(dis of list_district_ids){
 		let dis_div = document.createElement("DIV");
@@ -604,9 +604,9 @@ function printAllData(my_table, counter, daily_data, monthly_data, yearly_data, 
 	// si se quiere con borde añadir border=1 después de table
 	let table_html = "<table id='tabla_residuos' align=center cellpadding=10>";
 	//Añadimos la cabecera
-	table_html+='<thead><tr class="header"><th>Fecha</th>';
+	table_html+='<thead><tr class="header"><th scope="col">Fecha</th>';
 	for (cont of counter_list){
-		table_html+='<td>' + cont[counter] + '</td>';
+		table_html+='<th scope="col">' + cont[counter] + '</th>';
 	}
 	table_html+='<td>TOTAL</td></tr></thead>';
 
@@ -618,7 +618,7 @@ function printAllData(my_table, counter, daily_data, monthly_data, yearly_data, 
 		const total_y = datos_anual.map(elem => elem.picked_up).reduce((pv,cv)=>parseInt(pv)+parseInt(cv),0);
 		const total_year = total_y.toLocaleString('de-DE') + ' kg';
 
-		table_html+='<tr  class="data_per_year" onclick="changeTableIcon(\'hidden_row_icon_'+ counter + index_anual + '_meses\');showHideElement(\'hidden_row_'+ counter + index_anual +'_meses\')"><th><i class="fa fa-chevron-circle-down" aria-hidden="true" id="hidden_row_icon_'+ counter + index_anual + '_meses"> </i>' + index_anual + '</th>';
+		table_html+='<tr  class="data_per_year" onclick="changeTableIcon(\'hidden_row_icon_'+ counter + index_anual + '_meses\');showHideElement(\'hidden_row_'+ counter + index_anual +'_meses\')"><th scope="row"><i class="fa fa-chevron-circle-down" aria-hidden="true" id="hidden_row_icon_'+ counter + index_anual + '_meses"> </i>' + index_anual + '</th>';
 		for (cont of counter_list){
 			const valor = datos_anual.filter(elem => elem[counter+'_id'] === cont[counter+'_id'])[0];
 
@@ -646,7 +646,7 @@ function printAllData(my_table, counter, daily_data, monthly_data, yearly_data, 
 			for(index_diario of lista_diaria){
 				table_html+='showHideElement(\'hidden_row_'+ counter + index_anual + index_mensual + index_diario +'\');';
 			} 
-			table_html+='"><th><i class="fa fa-chevron-circle-down" aria-hidden="true" id="hidden_row_icon_'+ counter + index_anual + index_mensual + '"> </i>';
+			table_html+='"><th scope="row"><i class="fa fa-chevron-circle-down" aria-hidden="true" id="hidden_row_icon_'+ counter + index_anual + index_mensual + '"> </i>';
 			if (index_mensual == 1){
 					table_html+='Enero</th>';
 				}
@@ -705,7 +705,7 @@ function printAllData(my_table, counter, daily_data, monthly_data, yearly_data, 
 				const total_d = datos_diario.filter(elem => elem.month == index_mensual && elem.day == index_diario).map(elem => elem.picked_up).reduce((pv,cv)=>parseInt(pv)+parseInt(cv),0);
 				const total_day = total_d.toLocaleString('de-DE') + ' kg';
 
-				table_html+='<tr  id="hidden_row_'+ counter + index_anual + index_mensual + index_diario +'" class="data_per_day hidden_row"> <th>' + index_diario + '</th>';
+				table_html+='<tr  id="hidden_row_'+ counter + index_anual + index_mensual + index_diario +'" class="data_per_day hidden_row"> <th scope="row">' + index_diario + '</th>';
 				for (cont of counter_list){
 					const valor = datos_diario.filter(elem => elem[counter+'_id'] === cont[counter+'_id'] && elem.month == index_mensual && elem.day == index_diario)[0];
 					
