@@ -10,8 +10,7 @@ Paleta de color utilizada para las tablas:
 body {
 	margin: 10px 10px 10px 10px;
 	width: 100%-20px;
-	font-family: Helvetica, 
-	Arial, Sans-Serif;
+	font-family: 'Open Sans', Roboto, Sans-Serif;
 
 	display: grid;
 	grid-gap: 10px;
