@@ -115,18 +115,19 @@ h2{
 	text-align: center;
 	background-color: #F2F2F2;
 	border: 1px solid #4B7F52;
-    overflow:auto;
-    white-space: nowrap;
+	overflow:auto;
+	white-space: nowrap;
 }
 
 .donwload_file{
-    display: inline-block;
+	display: inline-block;
 	text-align: left;
 }
 
 .api{
-    display: inline-block;
+	display: inline-block;
 	text-align: left;
+	white-space: normal;
 }
 .api .api_consult{
 	border: 1px solid #4B7F52;
