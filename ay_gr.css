@@ -135,8 +135,9 @@ h2{
 }
 
 .help{
-    display: inline-block;
+	display: inline-block;
 	text-align: left;
+	white-space: normal;
 }
 
 .garbage_graph{
