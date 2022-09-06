@@ -161,7 +161,51 @@
 
 	   		<div class="grid_element help" id="help_div">	
 				<h2>Manual de uso</h2>
-	   			<p>Menú de ayuda, breve guía. WIP</p>
+	   			<p>Bienvenido al manual de nuestra aplicación.</p>
+
+	   			<h3>Filtrar la información</h3>
+	   			<p>Es posible filtrar la información de forma que se obtengan los datos deseados.</p>
+	   			<p>Siempre que se cambie cualquier elemento de los filtro se actualizará la información mostrada.</p>
+	   			
+	   			<h4>Filtro de fechas</h4>
+	   			<p>Se puede filtrar el rango de fechas que se quiere visualizar.</p>
+	   			<p>En el propio filtro se explican el máximo y mínimo. En caso de que la fecha no esté dentro de esos límites o no sea una fecha se mostrará el texto en rojo indicando el error.</p>
+	   			<p>En caso de que se intente poner un valor mayor en el primero que en el segundo se igualará a la mayor de las fechas. De forma equivalente si el segundo valor es menor que el primer se igualará a la menor de las fechas.</p>
+
+	   			<h4>Filtro de tipos de residuos</h4>
+	   			<p>Se pueden filtrar los tipos de residuo que se visualizarán. Inicialmente se mostrarán todos los datos, pero se podrá filtrar cualquiera de esos tipos.</p>
+
+	   			<h4>Filtro de áreas</h4>
+	   			<p>Se pueden filtrar las áreas que se visualizarán. Inicialmente se mostrarán todas.</p>
+	   			<p>Se indica el distrito y las asociaciones de vecinos que componen un distrito. Se puede filtrar cualquiera de las asociaciones de vecinos. Si se quiere filtrar un distrito se puede hacer desmarcando todas las asociaciones de vecinos que lo componen.</p>
+	   			
+
+
+	   			<h3>Visualización de la información </h3>
+	   			<p>En el menú puede elegir la forma de visualizar la información de recogida de residuos en la ciudad de Granada que más se ajuste a sus necesidades.</p>
+	   			<h4>Tabla</h4>
+	   			<p>Aquí se muestra una tabla que contiene la información, en un principio está agregado a nivel de años, pero si se quiere información más detallada se puede hacer click en la fila de ese año y se desplegarán los datos de los diferentes meses de ese año.</p>
+	   			<p>De la misma forma se puede hacer click en una fila correspondiente a un mes y de esa forma se despliega información de cada día de ese mes.</p>
+	   			<P>Si se vuelve a hacer click en cualquiera de las filas que previamente se desplegó, se oculta toda la información de menor nivel.</P>
+
+	   			<h4>Mapa</h4>
+	   			<p>Si lo que se quiere es conocer es la cantidad recogida en cada Asociación de Vecinos se puede acceder a la opción mapa, donde se deslegará un mapa centrado en la ciudad de Granada separando los distritos y asociaciones de vecinos para poder identificarlos. Al hacer click en cualquiera de estos elementos se despliega información donde se indica el distrito al que pertenece, el nombre de la asociación de vecinos y la cantidad de residuos recogida.</p>
+	   			<p>Hay un pequeño error que provoca que el mapa no se muestre correctamente, ocurre cuando cambia el tamaño de visualización mientras esta opción estaba oculta, con volver a ajustar el tamaño de la visualización se soluciona.</p>
+
+	   			<h4>Gráficas</h4>
+	   			<p>Aquí se muestra una gráfica de barras donde se visualiza la cantidad de recogida de cada tipo de residuo en los diferentes años.</p>
+	   			<p>Si coloca el ratón sobre alguna de las barras podrá ver la cantidad exacta recogida, hay que recordar que se indica en kilogramos. Si se quiere quitar de la visualización alguno de los conjuntos de datos se puede hacer al hacer click en la leyenda, clickando sobre uno quitado se vuelve a mostrar.</p>
+	   			<P>El color de las barras es aleatorio y se actualiza cada vez que se cambia cualquier filtro.</P>
+
+	   			<h4>Descarga de datos</h4>
+	   			<p>Se puede descargar un fichero de datos eligiendo el formato y el nivel de profunidad en la fecha.</p> 
+	   			<p>Las opciones de formato son CSV y JSON, dos formatos de texto plano que permiten ser leídos por gran cantidad de programas.</p>
+	   			<p>Se puede obtener la fecha por años, meses o días, según las necesidades del usuario.</p>
+	   			<p>Una vez seleccionadas las opciones deseadas se podrá pulsar el botón "Descargar fichero"</p>
+
+	   			<h4>API</h4>
+	   			<p>Existe una API que nos permite acceder a la información mostrada en la web. En esta opción se puede ver una breve guía de como usarla, además se facilita la consulta que permita obtener la misma información que actualmente es mostrada en la web.</p>
+
 	   		</div>
 		</div>
 
