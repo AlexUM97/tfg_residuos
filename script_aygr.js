@@ -82,21 +82,6 @@ function getRandomRgb() {
 }
 
 //
-function max_datefields(){
-	let today = new Date();
-	let dd = today.getDate();
-	let mm = today.getMonth() + 1; //January is 0
-	let yyyy = today.getFullYear();
-	dd = (dd < 10) ? '0' + dd : dd;
-	mm = (mm < 10) ? '0' + mm : mm;
-	today = yyyy + '-' + mm + '-' + dd;
-
-	document.getElementById("start_date").setAttribute("max", today);
-	document.getElementById("end_date").setAttribute("max", today);
-	document.getElementById("end_date").value = today;
-}
-
-//
 function groupBy(objectArray, grouped_by, counter){
 	let helper = {};
 	return objectArray.reduce(function(acc, obj) {
@@ -119,6 +104,28 @@ function groupBy(objectArray, grouped_by, counter){
 	  }
 	  return acc;
 	}, []);
+}
+
+//
+function minmax_datefields(){
+	const dates = received_data['Dates'];
+	const min_date = dates['min_date'];
+	const max_date = dates['max_date'];
+
+	document.getElementById("start_date").setAttribute("min", min_date);
+	document.getElementById("start_date").setAttribute("max", max_date);
+	document.getElementById("start_date").value = min_date;
+
+	document.getElementById("end_date").setAttribute("min", min_date);
+	document.getElementById("end_date").setAttribute("max", max_date);
+	document.getElementById("end_date").value = max_date;
+
+	const min_date_f = min_date.substring(8,10) + '/' + min_date.substring(5,7) + '/' + min_date.substring(0,4);
+	const max_date_f = max_date.substring(8,10) + '/' + max_date.substring(5,7) + '/' + max_date.substring(0,4);
+
+	document.getElementById("dates_range").innerHTML = "Las fechas deben de estar entre el día " + 
+					min_date_f + " y " + max_date_f +
+					", tenga en cuenta que la primera fecha no puede ser posterior a la segunda fecha.";
 }
 
 function check_start_date_input(){
@@ -254,12 +261,12 @@ async function populate() {
 	//Se utiliza var porque necesitamos que sea global, no podemos limitar a la función
 	received_data = await response.json();
 
-	max_datefields();
+	minmax_datefields();
 
 
 	//Declarar filtros residuos
 	const garbages = received_data['Garbages'];
-	let garbage_filter = document.getElementById("garbage_filter");
+	let garbage_filter = document.getElementById("garbage_filter_div");
 
 	for(gar of garbages){
 		let div = document.createElement("DIV");
@@ -287,7 +294,7 @@ async function populate() {
 
 	//Declarar filtros distritios
 	const list_district_ids = getUniques(received_data['Districts'].map(elem => elem.district_id));
-	let district_filter = document.getElementById("district_filter");
+	let district_filter = document.getElementById("district_filter_div");
 
 	for(dis of list_district_ids){
 		let dis_div = document.createElement("DIV");
@@ -408,21 +415,29 @@ async function show_tables() {
 
 	const garbages = received_data['Garbages'];
 	let present_garbages = Array();
+	let flag_filtered_garbages = false;
 	for(gar of garbages) {
 		const garbage_checkbox = document.getElementById("garbage_checkbox_"+gar.garbage_id);
 
 		if(garbage_checkbox.checked){
 			present_garbages.push(gar);
 		}
+		else {
+			flag_filtered_garbages = true;
+		}
 	}
 
 	const districts = received_data['Districts'];
-	let present_districts = Array();
+	let present_subdistricts = Array();
+	let flag_filtered_subdistricts = false;
 	for(dis of districts) {
 		const subdistrict_checkbox = document.getElementById("subdistrict_checkbox_"+dis.subdistrict_id);
 
 		if(subdistrict_checkbox.checked){
-			present_districts.push(dis);
+			present_subdistricts.push(dis);
+		}
+		else {
+			flag_filtered_subdistricts = true;
 		}
 	}
 
@@ -434,7 +449,7 @@ async function show_tables() {
 						Date.parse(elem.year+'-'+elem.month+'-'+elem.day) >= Date.parse(start_date) &&
 						Date.parse(elem.year+'-'+elem.month+'-'+elem.day) <= Date.parse(end_date) &&
 						present_garbages.map(g => g.garbage_id).indexOf(elem.garbage_id) > -1 &&
-						present_districts.map(g => g.subdistrict_id).indexOf(elem.subdistrict_id) > -1
+						present_subdistricts.map(g => g.subdistrict_id).indexOf(elem.subdistrict_id) > -1
 					);
 
 
@@ -451,7 +466,7 @@ async function show_tables() {
 			let table_html = "<table id='tabla' align=center cellpadding=10> <tr><th>Distrito</th><td>"+layer.feature.properties.DISTRITO+"</td></tr> <tr><th>AAVV</th><td>"+layer.feature.properties.AAVV+"</td></tr>";
 			div.setAttribute("class","map_popup"); 
 		
-			if (present_districts.map(g => g.subdistrict_id).indexOf(layer.feature.properties.AAVV_ID)===-1){
+			if (present_subdistricts.map(g => g.subdistrict_id).indexOf(layer.feature.properties.AAVV_ID)===-1){
 				//Si desactivado oscurecer
 				layer.setStyle({"fillOpacity": 0.75});
 			}
@@ -538,28 +553,48 @@ async function show_tables() {
 	//API dinámica
 	let filtered_api = document.getElementById('filtered_api');
 
-	let api_garbages = '';
-	let api_subdistrict = '';
-
-	for (gar of present_garbages){
-		api_garbages += ',' + gar.garbage_id;
-	}
-	api_garbages = api_garbages.substring(1);
-
-	// for (gar of present_subdistrict){
-	// 	api_subdistrict += ',' + gar.subdistrict_id;
-	// }
-	// api_subdistrict = api_subdistrict.substring(1);
-
-	filtered_api.innerHTML = 'http://localhost/api.php?';
+	let filters = '';
 	if (Date.parse(start_date) != Date.parse(document.getElementById("start_date").min)){
-		filtered_api.innerHTML += 'sd=' + start_date;
+		filters = 'start=' + start_date;
 	}
 
 	if (Date.parse(end_date) != Date.parse(document.getElementById("end_date").max)){
-		filtered_api.innerHTML += 'ed=' + end_date;
+		if (filters === ''){
+			filters = 'end=' + end_date;
+		} else {
+			filters += '&end=' + end_date;
+		}
 	}
 
+	let api_garbages = '';
+	const list_garbages = getUniques(present_garbages.map(elem => elem.garbage_id)).sort((a,b)=>(a-b));
+	for (gar of list_garbages){
+		api_garbages += ',' + gar;
+	}
+	api_garbages = api_garbages.substring(1);
+	if (flag_filtered_garbages === true){
+		if (filters === ''){
+			filters = 'garbage=' + api_garbages;
+		} else {
+			filters += '&garbage=' + api_garbages;
+		}
+	}
+
+	let api_subdistrict = '';
+	const list_subdistricts = getUniques(present_subdistricts.map(elem => elem.subdistrict_id)).sort((a,b)=>(a-b));
+	for (sdi of list_subdistricts){
+		api_subdistrict += ',' + sdi;
+	}
+	api_subdistrict = api_subdistrict.substring(1);
+	if (flag_filtered_subdistricts === true){
+		if (filters === ''){
+			filters = 'subdistrict=' + api_subdistrict;
+		} else {
+			filters += '&subdistrict=' + api_subdistrict;
+		}
+	}
+
+	filtered_api.innerHTML = 'http://localhost/api.php?' + filters;
 }
 
 function printAllData(my_table, counter, daily_data, monthly_data, yearly_data, counter_list){
@@ -569,9 +604,9 @@ function printAllData(my_table, counter, daily_data, monthly_data, yearly_data, 
 	// si se quiere con borde añadir border=1 después de table
 	let table_html = "<table id='tabla_residuos' align=center cellpadding=10>";
 	//Añadimos la cabecera
-	table_html+='<thead><tr class="header"><th>Fecha</th>';
+	table_html+='<thead><tr class="header"><th scope="col">Fecha</th>';
 	for (cont of counter_list){
-		table_html+='<td">' + cont[counter] + '</td>';
+		table_html+='<th scope="col">' + cont[counter] + '</th>';
 	}
 	table_html+='<td>TOTAL</td></tr></thead>';
 
@@ -583,7 +618,7 @@ function printAllData(my_table, counter, daily_data, monthly_data, yearly_data, 
 		const total_y = datos_anual.map(elem => elem.picked_up).reduce((pv,cv)=>parseInt(pv)+parseInt(cv),0);
 		const total_year = total_y.toLocaleString('de-DE') + ' kg';
 
-		table_html+='<tr  class="data_per_year" onclick="changeTableIcon(\'hidden_row_icon_'+ counter + index_anual + '_meses\');showHideElement(\'hidden_row_'+ counter + index_anual +'_meses\')"><th><i class="fa fa-chevron-circle-down" aria-hidden="true" id="hidden_row_icon_'+ counter + index_anual + '_meses"> </i>' + index_anual + '</th>';
+		table_html+='<tr  class="data_per_year" onclick="changeTableIcon(\'hidden_row_icon_'+ counter + index_anual + '_meses\');showHideElement(\'hidden_row_'+ counter + index_anual +'_meses\')"><th scope="row"><i class="fa fa-chevron-circle-down" aria-hidden="true" id="hidden_row_icon_'+ counter + index_anual + '_meses"> </i>' + index_anual + '</th>';
 		for (cont of counter_list){
 			const valor = datos_anual.filter(elem => elem[counter+'_id'] === cont[counter+'_id'])[0];
 
@@ -611,7 +646,7 @@ function printAllData(my_table, counter, daily_data, monthly_data, yearly_data, 
 			for(index_diario of lista_diaria){
 				table_html+='showHideElement(\'hidden_row_'+ counter + index_anual + index_mensual + index_diario +'\');';
 			} 
-			table_html+='"><th><i class="fa fa-chevron-circle-down" aria-hidden="true" id="hidden_row_icon_'+ counter + index_anual + index_mensual + '"> </i>';
+			table_html+='"><th scope="row"><i class="fa fa-chevron-circle-down" aria-hidden="true" id="hidden_row_icon_'+ counter + index_anual + index_mensual + '"> </i>';
 			if (index_mensual == 1){
 					table_html+='Enero</th>';
 				}
@@ -670,7 +705,7 @@ function printAllData(my_table, counter, daily_data, monthly_data, yearly_data, 
 				const total_d = datos_diario.filter(elem => elem.month == index_mensual && elem.day == index_diario).map(elem => elem.picked_up).reduce((pv,cv)=>parseInt(pv)+parseInt(cv),0);
 				const total_day = total_d.toLocaleString('de-DE') + ' kg';
 
-				table_html+='<tr  id="hidden_row_'+ counter + index_anual + index_mensual + index_diario +'" class="data_per_day hidden_row"> <th>' + index_diario + '</th>';
+				table_html+='<tr  id="hidden_row_'+ counter + index_anual + index_mensual + index_diario +'" class="data_per_day hidden_row"> <th scope="row">' + index_diario + '</th>';
 				for (cont of counter_list){
 					const valor = datos_diario.filter(elem => elem[counter+'_id'] === cont[counter+'_id'] && elem.month == index_mensual && elem.day == index_diario)[0];
 					
